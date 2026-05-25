@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Ejemplares | GANAVENT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --green-deep: #1a3a2a;
+            --green-mid: #2d6a4f;
+            --green-light: #52b788;
+            --amber: #c87941;
+            --amber-light: #f4a261;
+            --cream: #f9f5ec;
+            --cream-dark: #ede8d8;
+            --text: #1e1e1b;
+            --text-muted: #6b6b63;
+            --white: #ffffff;
+            --shadow-card: 0 8px 32px rgba(26,58,42,0.10);
+            --shadow-hover: 0 20px 60px rgba(26,58,42,0.18);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--cream);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ── HEADER ── */
+        .site-header {
+            background: var(--green-deep);
+            padding: 0 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.55rem;
+            font-weight: 900;
+            color: var(--cream);
+            letter-spacing: -0.5px;
+        }
+        .header-logo span { color: var(--amber-light); }
+        .header-back {
+            text-decoration: none;
+            color: var(--cream-dark);
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .header-back:hover { opacity: 1; }
+
+        /* ── PAGE HERO ── */
+        .page-hero {
+            background: linear-gradient(135deg, var(--green-deep) 0%, #2a5c3f 60%, #1f4a32 100%);
+            padding: 4rem 2.5rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -80px;
+            width: 400px; height: 400px;
+            border-radius: 50%;
+            background: rgba(82,183,136,0.08);
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -40px; left: 10%;
+            width: 280px; height: 280px;
+            border-radius: 50%;
+            background: rgba(200,121,65,0.07);
+        }
+        .page-hero-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 0.75rem;
+        }
+        .page-hero h1 em {
+            font-style: normal;
+            color: var(--amber-light);
+        }
+        .page-hero p {
+            color: rgba(249,245,236,0.75);
+            font-size: 1.05rem;
+            font-weight: 300;
+            max-width: 520px;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+        .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--amber-light);
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.78rem;
+            color: rgba(249,245,236,0.6);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 3px;
+        }
+
+        /* ── CONTROLS ── */
+        .controls-bar {
+            background: var(--white);
+            border-bottom: 1px solid var(--cream-dark);
+            padding: 1rem 2.5rem;
+            position: sticky;
+            top: 64px;
+            z-index: 90;
+        }
+        .controls-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .view-toggle {
+            display: flex;
+            gap: 4px;
+            background: var(--cream);
+            border-radius: 8px;
+            padding: 4px;
+        }
+        .view-btn {
+            width: 34px; height: 34px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+        .view-btn.active {
+            background: var(--white);
+            color: var(--green-mid);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+        }
+        .filter-pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+        .pill {
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1.5px solid var(--cream-dark);
+            background: var(--white);
+            color: var(--text-muted);
+            transition: all 0.18s;
+            white-space: nowrap;
+        }
+        .pill.active, .pill:hover {
+            background: var(--green-deep);
+            border-color: var(--green-deep);
+            color: var(--white);
+        }
+        .search-wrap {
+            position: relative;
+        }
+        .search-wrap i {
+            position: absolute;
+            left: 12px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .search-input {
+            padding: 8px 14px 8px 34px;
+            border: 1.5px solid var(--cream-dark);
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            outline: none;
+            background: var(--cream);
+            width: 200px;
+            transition: border-color 0.2s;
+        }
+        .search-input:focus {
+            border-color: var(--green-light);
+            background: var(--white);
+        }
+
+        /* ── MAIN CONTENT ── */
+        .main-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 2.5rem 4rem;
+        }
+
+        /* ── GRID VIEW ── */
+        .grid-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+        .grid-view.hidden, .table-wrap.hidden { display: none; }
+
+        .animal-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: transform 0.25s, box-shadow 0.25s;
+            cursor: pointer;
+        }
+        .animal-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+        .card-img-wrap {
+            height: 190px;
+            overflow: hidden;
+            position: relative;
+        }
+        .card-img-wrap img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+        .animal-card:hover .card-img-wrap img { transform: scale(1.06); }
+        .card-badge {
+            position: absolute;
+            top: 12px; left: 12px;
+            background: rgba(26,58,42,0.88);
+            backdrop-filter: blur(4px);
+            color: var(--white);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .card-price-badge {
+            position: absolute;
+            top: 12px; right: 12px;
+            background: var(--amber);
+            color: var(--white);
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        .card-body {
+            padding: 1.2rem 1.3rem 1.4rem;
+        }
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            color: var(--green-deep);
+        }
+        .card-subtitle {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .card-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem;
+        }
+        .spec-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .spec-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+        .spec-val {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .spec-val.green { color: var(--green-mid); }
+        .card-footer {
+            padding: 0 1.3rem 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .total-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--green-deep);
+        }
+        .total-price span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        .btn-ver {
+            background: var(--green-mid);
+            color: var(--white);
+            border: none;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: background 0.2s;
+        }
+        .btn-ver:hover { background: var(--green-deep); }
+
+        /* ── TABLE VIEW ── */
+        .table-wrap {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        thead th {
+            background: var(--green-deep);
+            color: rgba(249,245,236,0.85);
+            padding: 1rem 1.2rem;
+            font-weight: 600;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-align: left;
+            white-space: nowrap;
+        }
+        tbody tr {
+            border-bottom: 1px solid var(--cream);
+            transition: background 0.15s;
+            cursor: pointer;
+        }
+        tbody tr:hover { background: var(--cream); }
+        tbody td {
+            padding: 0.85rem 1.2rem;
+            vertical-align: middle;
+        }
+        .table-thumb {
+            width: 54px; height: 54px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid var(--cream-dark);
+        }
+        .table-raza {
+            background: var(--cream-dark);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .table-price { color: var(--green-mid); font-weight: 700; }
+        .table-btn {
+            background: transparent;
+            border: 1.5px solid var(--green-mid);
+            color: var(--green-mid);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
+        }
+        .table-btn:hover {
+            background: var(--green-mid);
+            color: var(--white);
+        }
+
+        /* ── RESULTS COUNT ── */
+        .results-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--cream-dark);
+        }
+        .results-count {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+        .results-count strong { color: var(--text); }
+
+        /* ── MODAL PERFIL ── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10,20,15,0.75);
+            backdrop-filter: blur(6px);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal {
+            background: var(--white);
+            border-radius: 28px;
+            width: 100%;
+            max-width: 820px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(30px) scale(0.97);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.35);
+        }
+        .modal-overlay.open .modal {
+            transform: translateY(0) scale(1);
+        }
+        .modal-close {
+            position: absolute;
+            top: 1.2rem; right: 1.2rem;
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.06);
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+            z-index: 10;
+        }
+        .modal-close:hover { background: rgba(0,0,0,0.12); }
+
+        /* Perfil — cabecera con imagen grande */
+        .profile-hero {
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 28px 28px 0 0;
+        }
+        .profile-hero img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+        .profile-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10,20,15,0.88) 0%, rgba(10,20,15,0.1) 50%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+        }
+        .profile-raza-chip {
+            display: inline-block;
+            background: var(--amber);
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 0.6rem;
+            width: fit-content;
+        }
+        .profile-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1.1;
+        }
+        .profile-sub {
+            color: rgba(249,245,236,0.7);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Perfil — body */
+        .profile-body {
+            padding: 2rem 2.2rem;
+        }
+
+        /* Ficha técnica grid */
+        .ficha-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .ficha-item {
+            background: var(--cream);
+            border-radius: 14px;
+            padding: 1.1rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .ficha-icon {
+            font-size: 1.1rem;
+            color: var(--green-light);
+            margin-bottom: 0.2rem;
+        }
+        .ficha-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--text-muted);
+        }
+        .ficha-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--green-deep);
+            font-family: 'Playfair Display', serif;
+        }
+        .ficha-unit {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 400;
+        }
+
+        /* Barra de precio destacada */
+        .precio-bar {
+            background: linear-gradient(120deg, var(--green-deep), var(--green-mid));
+            border-radius: 16px;
+            padding: 1.4rem 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .precio-bar-left {
+            display: flex;
+            flex-direction: column;
+        }
+        .precio-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: rgba(255,255,255,0.6);
+        }
+        .precio-total {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1;
+        }
+        .precio-desglose {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.6);
+            margin-top: 2px;
+        }
+        .btn-cotizar {
+            background: var(--amber);
+            color: var(--white);
+            border: none;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s, transform 0.2s;
+            white-space: nowrap;
+        }
+        .btn-cotizar:hover {
+            background: #b06535;
+            transform: translateY(-2px);
+        }
+
+        /* Características */
+        .caracteristicas h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--green-deep);
+            margin-bottom: 1rem;
+        }
+        .caract-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem;
+        }
+        .caract-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.88rem;
+            color: var(--text);
+        }
+        .caract-list li i {
+            color: var(--green-light);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        /* Notas adicionales */
+        .notas {
+            margin-top: 1.5rem;
+            padding: 1.2rem;
+            border-left: 3px solid var(--amber-light);
+            background: #fff8f0;
+            border-radius: 0 12px 12px 0;
+        }
+        .notas h4 {
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--amber);
+            margin-bottom: 0.4rem;
+        }
+        .notas p {
+            font-size: 0.86rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+        .empty-state i { font-size: 3rem; margin-bottom: 1rem; display: block; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-hero h1 { font-size: 2.2rem; }
+            .hero-stats { gap: 1.5rem; }
+            .controls-inner { gap: 0.8rem; }
+            .ficha-grid { grid-template-columns: 1fr 1fr; }
+            .profile-hero { height: 220px; }
+            .profile-name { font-size: 1.7rem; }
+            .caract-list { grid-template-columns: 1fr; }
+            .main-content { padding: 1.5rem 1rem 3rem; }
+            .controls-bar { padding: 0.8rem 1rem; }
+            .page-hero { padding: 2.5rem 1rem 2rem; }
+        }
+        @media (max-width: 480px) {
+            .ficha-grid { grid-template-columns: 1fr 1fr; }
+            .precio-bar { flex-direction: column; align-items: flex-start; }
+            .search-input { width: 150px; }
+            .hero-stats { flex-wrap: wrap; gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+    <a href="index.html" class="header-back">
+        <i class="fas fa-arrow-left"></i> Volver al inicio
+    </a>
+    <div class="header-logo">GANA<span>VENT</span></div>
+    <div style="width:120px;"></div>
+</header>
+
+<!-- HERO DE LA PÁGINA -->
+<div class="page-hero">
+    <div class="page-hero-inner">
+        <h1>Catálogo de<br><em>Ejemplares</em></h1>
+        <p>Cada animal con su ficha completa: raza, peso, edad, precio y características genéticas.</p>
+        <div class="hero-stats">
+            <div class="stat"><span class="stat-num" id="statTotal">14</span><span class="stat-label">Ejemplares</span></div>
+            <div class="stat"><span class="stat-num">4</span><span class="stat-label">Razas</span></div>
+            <div class="stat"><span class="stat-num">5</span><span class="stat-label">Categorías</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- BARRA DE CONTROLES -->
+<div class="controls-bar">
+    <div class="controls-inner">
+        <div class="view-toggle">
+            <button class="view-btn active" id="btnGrid" title="Vista tarjetas"><i class="fas fa-th-large"></i></button>
+            <button class="view-btn" id="btnTable" title="Vista tabla"><i class="fas fa-list"></i></button>
+        </div>
+        <div class="filter-pills" id="filterPills">
+            <button class="pill active" data-filter="all">Todos</button>
+            <button class="pill" data-filter="Angus">Angus</button>
+            <button class="pill" data-filter="Brangus">Brangus</button>
+            <button class="pill" data-filter="Hereford">Hereford</button>
+            <button class="pill" data-filter="Brahman">Brahman</button>
+        </div>
+        <div class="search-wrap">
+            <i class="fas fa-search"></i>
+            <input type="text" class="search-input" id="searchInput" placeholder="Buscar...">
+        </div>
+    </div>
+</div>
+
+<!-- CONTENIDO PRINCIPAL -->
+<div class="main-content">
+    <div class="results-bar">
+        <div class="results-count">Mostrando <strong id="countShown">14</strong> de <strong>14</strong> ejemplares</div>
+        <div style="font-size:0.82rem; color:var(--text-muted);">Toca una tarjeta para ver el perfil completo</div>
+    </div>
+
+    <!-- GRID DE TARJETAS -->
+    <div class="grid-view" id="gridView"></div>
+
+    <!-- VISTA TABLA -->
+    <div class="table-wrap hidden" id="tableView">
+        <table>
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Raza</th>
+                    <th>Categoría</th>
+                    <th>Peso</th>
+                    <th>Edad</th>
+                    <th>USD/kg</th>
+                    <th>Total USD</th>
+                    <th>Perfil</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- MODAL PERFIL INDIVIDUAL -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modalEl">
+        <button class="modal-close" id="modalClose"><i class="fas fa-times"></i></button>
+        <div id="modalContent"></div>
+    </div>
+</div>
+
+<script>
+// ============================================================
+// BASE DE DATOS DE EJEMPLARES
+// ============================================================
+const ganado = [
+    {
+        id: 1,
+        raza: "Angus",
+        categoria: "Toro Joven",
+        peso: 560,
+        edad: 24,
+        precioKg: 3.85,
+        imagen: "https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=800&auto=format",
+        caracteristicas: ["Alta marmoleación", "Fertilidad comprobada", "Pedigrí documentado", "Vacunado y desparasitado", "Adaptación a pastizales", "Fácil manejo"],
+        nota: "Ejemplar de alto potencial reproductor. Apto para establecer rodeo de cría de alta genética. Disponibilidad inmediata.",
+        estado: "Disponible"
+    },
+    {
+        id: 2,
+        raza: "Angus",
+        categoria: "Vaquillona",
+        peso: 380,
+        edad: 18,
+        precioKg: 3.60,
+        imagen: "https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=800&auto=format",
+        caracteristicas: ["Lista para servicio", "Excelente conformación", "Madres de alta producción", "Sin defectos heredables", "Ganancia de peso superior", "Certificado sanitario"],
+        nota: "Lote homogéneo de vaquillonas preñadas. Diagnóstico de preñez reciente. Entrega coordinada con el comprador.",
+        estado: "Disponible"
+    },
+    {
+        id: 3,
+        raza: "Angus",
+        categoria: "Novillo",
+        peso: 490,
+        edad: 22,
+        precioKg: 3.75,
+        imagen: "https://images.unsplash.com/photo-1609252925444-f56c5e580b4d?w=800&auto=format",
+        caracteristicas: ["Terminación eficiente", "Bajo índice de grasa dorsal", "Alta conversión alimenticia", "Sin intervención hormonal", "Apto exportación", "Trazabilidad completa"],
+        nota: "Novillos con destino faena o feedlot. Excelente rendimiento al gancho superior al 58%. Ideales para mercados exigentes.",
+        estado: "Disponible"
+    },
+    {
+        id: 4,
+        raza: "Brangus",
+        categoria: "Toro",
+        peso: 710,
+        edad: 36,
+        precioKg: 3.50,
+        imagen: "https://images.unsplash.com/photo-1585468274952-66591eb14165?w=800&auto=format",
+        caracteristicas: ["Resistencia al calor", "Rusticidad extrema", "Alta libido comprobada", "Adaptación trópico-subtropico", "Casco y piel fuertes", "Longevidad reproductiva"],
+        nota: "Toro probado con 3 temporadas de servicio. 85% preñez en rodeo de 80 vientres. Ideal para zonas cálidas y pastizales nativos.",
+        estado: "Disponible"
+    },
+    {
+        id: 5,
+        raza: "Brangus",
+        categoria: "Vaquillona",
+        peso: 410,
+        edad: 20,
+        precioKg: 3.40,
+        imagen: "https://images.unsplash.com/photo-1608577077446-ca92b35888c5?w=800&auto=format",
+        caracteristicas: ["Preñez verificada", "Adaptación a zonas cálidas", "Bajo requerimiento hídrico", "Temperamento dócil", "Alta producción de leche", "Piel pigmentada"],
+        nota: "Vaquillonas Brangus seleccionadas de rodeo mejorado. Aptas para climas tropicales con temperaturas extremas.",
+        estado: "Reservado"
+    },
+    {
+        id: 6,
+        raza: "Brangus",
+        categoria: "Novillo",
+        peso: 535,
+        edad: 24,
+        precioKg: 3.55,
+        imagen: "https://images.unsplash.com/photo-1595960364541-f6ee2e27ec3c?w=800&auto=format",
+        caracteristicas: ["Ganancia 1.2 kg/día", "Adaptación superior", "Piel fuerte", "Alta resistencia parasitaria", "Sin tratamiento hormonal", "Rendimiento gancho 57%"],
+        nota: "Novillos con excelente relación precio/rendimiento para zonas subtropicales. Disponibles en lotes de 20 o más cabezas.",
+        estado: "Disponible"
+    },
+    {
+        id: 7,
+        raza: "Hereford",
+        categoria: "Toro",
+        peso: 650,
+        edad: 30,
+        precioKg: 3.65,
+        imagen: "https://images.unsplash.com/photo-1595433707802-5c0b489e1df4?w=800&auto=format",
+        caracteristicas: ["Precocidad destacada", "Mansedumbre", "Excelente paternidad", "Fácil parto", "Alta eficiencia alimenticia", "Longevidad superior"],
+        nota: "Toro Hereford caras blancas con genealogía importada. Ideal para cruzamiento industrial con rodeo Angus o Criolla.",
+        estado: "Disponible"
+    },
+    {
+        id: 8,
+        raza: "Hereford",
+        categoria: "Vaquillona",
+        peso: 395,
+        edad: 19,
+        precioKg: 3.50,
+        imagen: "https://images.unsplash.com/photo-1544887880-0831edae1602?w=800&auto=format",
+        caracteristicas: ["Partos fáciles", "Instinto materno", "Alta producción láctea", "Mansedumbre", "Adaptación a zonas frías", "Fertilidad comprobada"],
+        nota: "Vaquillonas Hereford seleccionadas para reposición. Alta prolificidad de madres. Entrega en campo o feedlot.",
+        estado: "Disponible"
+    },
+    {
+        id: 9,
+        raza: "Hereford",
+        categoria: "Novillo",
+        peso: 470,
+        edad: 21,
+        precioKg: 3.60,
+        imagen: "https://images.unsplash.com/photo-1556862674-5ddb3d3a4c2c?w=800&auto=format",
+        caracteristicas: ["Terminación a pasto", "Bajo costo producción", "Rendimiento al gancho 59%", "Marmoleado medio-alto", "Trazabilidad individual", "Apto exportación"],
+        nota: "Novillos Hereford terminados a campo natural. Excelentes para frigoríficos exportadores y mercado premium.",
+        estado: "Disponible"
+    },
+    {
+        id: 10,
+        raza: "Brahman",
+        categoria: "Toro",
+        peso: 780,
+        edad: 40,
+        precioKg: 3.20,
+        imagen: "https://images.unsplash.com/photo-1602174198173-390f9b7b4f8a?w=800&auto=format",
+        caracteristicas: ["Longevidad 10+ años", "Cruzamiento industrial", "Resistencia extrema calor", "Parasite tolerant", "Alta fertilidad", "Pezuña fuerte"],
+        nota: "Toro Brahman de línea pura gris americano. Perfecto como base genética para cruzamiento F1 con razas europeas.",
+        estado: "Disponible"
+    },
+    {
+        id: 11,
+        raza: "Brahman",
+        categoria: "Vaquillona",
+        peso: 430,
+        edad: 22,
+        precioKg: 3.10,
+        imagen: "https://images.unsplash.com/photo-1596920435234-6082e7b4c64d?w=800&auto=format",
+        caracteristicas: ["Ciclos anovulatorios cortos", "Alta producción leche trópico", "Piel pigmentada", "Resistencia al garrapata", "Temperamento tranquilo", "Larga vida productiva"],
+        nota: "Vaquillonas Brahman grises seleccionadas para establecer rodeo de cría en zonas cálidas y húmedas.",
+        estado: "Disponible"
+    },
+    {
+        id: 12,
+        raza: "Brahman",
+        categoria: "Novillo",
+        peso: 560,
+        edad: 28,
+        precioKg: 3.25,
+        imagen: "https://images.unsplash.com/photo-1586317760270-8f615d9b8eae?w=800&auto=format",
+        caracteristicas: ["Alta conversión forrajera", "Adaptación pastizales nativos", "Bajo costo de mantenimiento", "Sin intervención hormonal", "Rendimiento 56% gancho", "Mercado asiático apto"],
+        nota: "Novillos Brahman terminados en pastizales naturales. Demandados en mercados internacionales por bajo costo de producción.",
+        estado: "Disponible"
+    },
+    {
+        id: 13,
+        raza: "Angus",
+        categoria: "Ternero",
+        peso: 210,
+        edad: 8,
+        precioKg: 4.10,
+        imagen: "https://images.unsplash.com/photo-1486464265777-6cd2be68579a?w=800&auto=format",
+        caracteristicas: ["Destete pesado", "Alta ganancia compensatoria", "Pedigrí Angus registrado", "Sin enfermedades", "Vacunación completa", "Alta conversión"],
+        nota: "Terneros destete con muy buen potencial de engorde. Ideales para invernada intensiva o semi-intensiva.",
+        estado: "Disponible"
+    },
+    {
+        id: 14,
+        raza: "Brangus",
+        categoria: "Ternero",
+        peso: 225,
+        edad: 9,
+        precioKg: 3.95,
+        imagen: "https://images.unsplash.com/photo-1541344256651-3b10a4b41b31?w=800&auto=format",
+        caracteristicas: ["Destete temprano", "Fácil adaptación", "Rusticidad Brahman + Angus", "Vacunado y desparasitado", "Trazabilidad completa", "Alta ganancia diaria"],
+        nota: "Terneros Brangus con el vigor híbrido F1. Excelente potencial de crecimiento para zonas cálidas.",
+        estado: "Disponible"
+    }
+];
+
+// ============================================================
+// ESTADO
+// ============================================================
+let currentFilter = 'all';
+let currentSearch = '';
+let currentView = 'grid';
+
+function filteredData() {
+    return ganado.filter(a => {
+        const matchRaza = currentFilter === 'all' || a.raza === currentFilter;
+        const q = currentSearch.toLowerCase();
+        const matchSearch = !q || a.raza.toLowerCase().includes(q) || a.categoria.toLowerCase().includes(q);
+        return matchRaza && matchSearch;
+    });
+}
+
+// ============================================================
+// RENDER GRID
+// ============================================================
+function renderGrid() {
+    const data = filteredData();
+    const grid = document.getElementById('gridView');
+    document.getElementById('countShown').textContent = data.length;
+
+    if (!data.length) {
+        grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1;"><i class="fas fa-search"></i><p>No se encontraron ejemplares con los filtros actuales.</p></div>';
+        return;
+    }
+
+    grid.innerHTML = data.map(a => {
+        const total = (a.peso * a.precioKg).toLocaleString('es-AR', {minimumFractionDigits: 0});
+        return `
+        <div class="animal-card" data-id="${a.id}">
+            <div class="card-img-wrap">
+                <img src="${a.imagen}" alt="${a.raza} ${a.categoria}"
+                     onerror="this.src='https://placehold.co/400x250?text=🐄'">
+                <div class="card-badge">${a.raza}</div>
+                <div class="card-price-badge">$${a.precioKg}/kg</div>
+            </div>
+            <div class="card-body">
+                <div class="card-title">${a.categoria}</div>
+                <div class="card-subtitle">${a.raza} · ${a.edad} meses</div>
+                <div class="card-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">Peso vivo</span>
+                        <span class="spec-val">${a.peso} kg</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Precio total</span>
+                        <span class="spec-val green">$${total}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="total-price">USD $${total} <span>/ cabeza</span></div>
+                <button class="btn-ver" data-id="${a.id}">Ver perfil <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>`;
+    }).join('');
+
+    // eventos
+    grid.querySelectorAll('.animal-card, .btn-ver').forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = parseInt(el.getAttribute('data-id') || el.closest('.animal-card').getAttribute('data-id'));
+            openModal(id);
+        });
+    });
+}
+
+// ============================================================
+// RENDER TABLA
+// ============================================================
+function renderTable() {
+    const data = filteredData();
+    const tbody = document.getElementById('tableBody');
+    document.getElementById('countShown').textContent = data.length;
+
+    if (!data.length) {
+        tbody.innerHTML = '<tr><td colspan="8" class="empty-state"><i class="fas fa-search"></i><p>Sin resultados.</p></td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = data.map(a => {
+        const total = (a.peso * a.precioKg).toLocaleString('es-AR', {minimumFractionDigits: 0});
+        return `
+        <tr data-id="${a.id}">
+            <td><img src="${a.imagen}" class="table-thumb" alt="${a.raza}"
+                     onerror="this.src='https://placehold.co/100x100?text=🐄'"></td>
+            <td><span class="table-raza">${a.raza}</span></td>
+            <td>${a.categoria}</td>
+            <td><strong>${a.peso} kg</strong></td>
+            <td>${a.edad} meses</td>
+            <td class="table-price">$${a.precioKg}</td>
+            <td class="table-price">$${total}</td>
+            <td><button class="table-btn" data-id="${a.id}">Ver perfil</button></td>
+        </tr>`;
+    }).join('');
+
+    tbody.querySelectorAll('[data-id]').forEach(el => {
+        el.addEventListener('click', () => {
+            openModal(parseInt(el.getAttribute('data-id')));
+        });
+    });
+}
+
+// ============================================================
+// RENDER AMBAS VISTAS
+// ============================================================
+function renderAll() {
+    renderGrid();
+    renderTable();
+}
+
+// ============================================================
+// MODAL — abrir perfil
+// ============================================================
+function openModal(id) {
+    const a = ganado.find(x => x.id === id);
+    if (!a) return;
+    const total = (a.peso * a.precioKg).toLocaleString('es-AR', {minimumFractionDigits: 0});
+    const estadoColor = a.estado === 'Disponible' ? 'var(--green-light)' : 'var(--amber)';
+
+    document.getElementById('modalContent').innerHTML = `
+        <div class="profile-hero">
+            <img src="${a.imagen}" alt="${a.raza} ${a.categoria}"
+                 onerror="this.src='https://placehold.co/800x300?text=🐄+${a.raza}'">
+            <div class="profile-hero-overlay">
+                <div class="profile-raza-chip">${a.raza}</div>
+                <div class="profile-name">${a.categoria}</div>
+                <div class="profile-sub">
+                    <span style="color:${estadoColor}; font-weight:700;">● ${a.estado}</span>
+                    &nbsp;·&nbsp; Ficha técnica de ejemplar
+                </div>
+            </div>
+        </div>
+        <div class="profile-body">
+            <div class="ficha-grid">
+                <div class="ficha-item">
+                    <span class="ficha-icon"><i class="fas fa-weight-hanging"></i></span>
+                    <span class="ficha-label">Peso vivo</span>
+                    <span class="ficha-value">${a.peso} <span class="ficha-unit">kg</span></span>
+                </div>
+                <div class="ficha-item">
+                    <span class="ficha-icon"><i class="fas fa-calendar-alt"></i></span>
+                    <span class="ficha-label">Edad</span>
+                    <span class="ficha-value">${a.edad} <span class="ficha-unit">meses</span></span>
+                </div>
+                <div class="ficha-item">
+                    <span class="ficha-icon"><i class="fas fa-tag"></i></span>
+                    <span class="ficha-label">Precio / kg</span>
+                    <span class="ficha-value">$${a.precioKg} <span class="ficha-unit">USD</span></span>
+                </div>
+                <div class="ficha-item">
+                    <span class="ficha-icon"><i class="fas fa-dna"></i></span>
+                    <span class="ficha-label">Raza</span>
+                    <span class="ficha-value" style="font-size:1.1rem;">${a.raza}</span>
+                </div>
+                <div class="ficha-item">
+                    <span class="ficha-icon"><i class="fas fa-layer-group"></i></span>
+                    <span class="ficha-label">Categoría</span>
+                    <span class="ficha-value" style="font-size:1.05rem;">${a.categoria}</span>
+                </div>
+                <div class="ficha-item">
+                    <span class="ficha-icon"><i class="fas fa-check-circle"></i></span>
+                    <span class="ficha-label">Estado</span>
+                    <span class="ficha-value" style="font-size:1rem; color:${estadoColor};">${a.estado}</span>
+                </div>
+            </div>
+
+            <div class="precio-bar">
+                <div class="precio-bar-left">
+                    <span class="precio-label">Precio total por cabeza</span>
+                    <span class="precio-total">USD $${total}</span>
+                    <span class="precio-desglose">${a.peso} kg × $${a.precioKg}/kg</span>
+                </div>
+                <button class="btn-cotizar" onclick="solicitarCotizacion('${a.raza}', '${a.categoria}', ${a.peso}, '${total}')">
+                    <i class="fas fa-paper-plane"></i> Solicitar cotización
+                </button>
+            </div>
+
+            <div class="caracteristicas">
+                <h3>Características del ejemplar</h3>
+                <ul class="caract-list">
+                    ${a.caracteristicas.map(c => `<li><i class="fas fa-check"></i> ${c}</li>`).join('')}
+                </ul>
+            </div>
+
+            <div class="notas">
+                <h4><i class="fas fa-info-circle"></i> Notas comerciales</h4>
+                <p>${a.nota}</p>
+            </div>
+        </div>
+    `;
+
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+function solicitarCotizacion(raza, cat, peso, total) {
+    alert(`✅ Solicitud enviada correctamente\n\nRaza: ${raza}\nCategoría: ${cat}\nPeso: ${peso} kg\nValor referencial: USD $${total}\n\nUn asesor comercial se comunicará con usted en breve con la ficha técnica completa y disponibilidad del lote.`);
+}
+
+// ============================================================
+// EVENTOS
+// ============================================================
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalOverlay').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// Filtros
+document.getElementById('filterPills').addEventListener('click', (e) => {
+    const pill = e.target.closest('.pill');
+    if (!pill) return;
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    currentFilter = pill.getAttribute('data-filter');
+    renderAll();
+});
+
+// Búsqueda
+document.getElementById('searchInput').addEventListener('input', (e) => {
+    currentSearch = e.target.value;
+    renderAll();
+});
+
+// Toggle vista
+document.getElementById('btnGrid').addEventListener('click', () => {
+    currentView = 'grid';
+    document.getElementById('btnGrid').classList.add('active');
+    document.getElementById('btnTable').classList.remove('active');
+    document.getElementById('gridView').classList.remove('hidden');
+    document.getElementById('tableView').classList.add('hidden');
+});
+document.getElementById('btnTable').addEventListener('click', () => {
+    currentView = 'table';
+    document.getElementById('btnTable').classList.add('active');
+    document.getElementById('btnGrid').classList.remove('active');
+    document.getElementById('tableView').classList.remove('hidden');
+    document.getElementById('gridView').classList.add('hidden');
+});
+
+// ============================================================
+// INIT
+// ============================================================
+renderAll();
+</script>
+</body>
+</html>

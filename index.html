@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Plataforma profesional de venta y clasificación de ganado por raza, peso y edad. Ofrecemos ejemplares de alta genética Angus, Brangus, Hereford y más.">
+    <meta name="keywords" content="venta de ganado, clasificación de ganado, razas bovinas, toros, vacas, peso del ganado, genética bovina">
+    <title>GANAVENT | Venta y Clasificación de Ganado</title>
+
+    <!-- ── FUENTES: mismas que catalogo.html ── -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* ══════════════════════════════════════════
+           VARIABLES — idénticas a catalogo.html
+           para mantener coherencia visual total
+        ══════════════════════════════════════════ */
+        :root {
+            --green-deep:   #1a3a2a;
+            --green-mid:    #2d6a4f;
+            --green-light:  #52b788;
+            --amber:        #c87941;
+            --amber-light:  #f4a261;
+            --cream:        #f9f5ec;
+            --cream-dark:   #ede8d8;
+            --text:         #1e1e1b;
+            --text-muted:   #6b6b63;
+            --white:        #ffffff;
+            --shadow-card:  0 8px 32px rgba(26,58,42,0.10);
+            --shadow-hover: 0 20px 60px rgba(26,58,42,0.18);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2.5rem;
+        }
+
+        /* ══════════════════════════════════════════
+           NAVBAR
+        ══════════════════════════════════════════ */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 68px;
+            background: rgba(249,245,236,0.95);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(26,58,42,0.12);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+        .nav-inner {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .logo-img {
+            width: 44px; height: 44px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: var(--cream-dark);
+            padding: 4px;
+            transition: transform 0.2s;
+        }
+        .logo:hover .logo-img { transform: scale(1.04); }
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.55rem;
+            font-weight: 900;
+            color: var(--green-deep);
+        }
+        .logo-text em {
+            font-style: normal;
+            color: var(--amber);
+        }
+        /* Links */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--green-deep); }
+        /* Botón CTA en nav */
+        .nav-cta {
+            background: var(--green-deep);
+            color: var(--white) !important;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600 !important;
+            font-size: 0.85rem !important;
+            transition: background 0.2s, transform 0.2s !important;
+        }
+        .nav-cta:hover {
+            background: var(--amber) !important;
+            color: var(--white) !important;
+            transform: translateY(-2px);
+        }
+        /* Hamburguesa */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--green-deep);
+        }
+
+        /* ══════════════════════════════════════════
+           HERO
+        ══════════════════════════════════════════ */
+        .hero {
+            min-height: 100vh;
+            background:
+                linear-gradient(120deg, rgba(10,22,15,0.82) 0%, rgba(10,22,15,0.55) 60%, rgba(10,22,15,0.35) 100%),
+                url('portada.png') center / cover no-repeat;
+            display: flex;
+            align-items: center;
+            padding-top: 68px; /* compensa navbar fija */
+        }
+        .hero-inner {
+            padding: 6rem 0 5rem;
+        }
+        .hero-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(200,121,65,0.88);
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 40px;
+            margin-bottom: 1.6rem;
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 6vw, 4.8rem);
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1.08;
+            margin-bottom: 1.4rem;
+            max-width: 700px;
+        }
+        .hero h1 em {
+            font-style: italic;
+            color: var(--amber-light);
+        }
+        .hero-desc {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: rgba(249,245,236,0.82);
+            max-width: 520px;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            background: var(--green-mid);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 24px rgba(45,106,79,0.4);
+        }
+        .btn-primary:hover {
+            background: var(--green-deep);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(45,106,79,0.5);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.5);
+            padding: 1rem 2.2rem;
+            border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            text-decoration: none;
+            transition: background 0.2s, border-color 0.2s, transform 0.2s;
+        }
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.12);
+            border-color: var(--white);
+            transform: translateY(-3px);
+        }
+        /* Counters bajo el hero */
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+        .hero-stat { display: flex; flex-direction: column; }
+        .stat-n {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            font-weight: 900;
+            color: var(--amber-light);
+            line-height: 1;
+        }
+        .stat-l {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: rgba(249,245,236,0.55);
+            margin-top: 4px;
+        }
+
+        /* ══════════════════════════════════════════
+           SECCIÓN: ACCESO AL CATÁLOGO (pieza clave)
+        ══════════════════════════════════════════ */
+        .catalogo-cta {
+            padding: 5.5rem 0;
+            background: var(--white);
+        }
+        .catalogo-cta-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .catalogo-text .eyebrow {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--amber);
+            margin-bottom: 1rem;
+        }
+        .catalogo-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            font-weight: 900;
+            color: var(--green-deep);
+            line-height: 1.12;
+            margin-bottom: 1.2rem;
+        }
+        .catalogo-text h2 em {
+            font-style: italic;
+            color: var(--amber);
+        }
+        .catalogo-text p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.75;
+            margin-bottom: 2rem;
+        }
+        .catalogo-features {
+            list-style: none;
+            margin-bottom: 2.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+        .catalogo-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.92rem;
+            color: var(--text);
+        }
+        .catalogo-features li i {
+            color: var(--green-light);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        /* Tarjeta de preview del catálogo */
+        .catalogo-preview {
+            background: var(--cream);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: var(--shadow-hover);
+            position: relative;
+        }
+        .preview-header {
+            background: var(--green-deep);
+            padding: 1.2rem 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .preview-dot {
+            width: 11px; height: 11px;
+            border-radius: 50%;
+        }
+        .preview-header span {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: rgba(249,245,236,0.8);
+            margin-left: 8px;
+        }
+        .preview-body {
+            padding: 1.5rem;
+        }
+        /* Mini tarjetas de ejemplo */
+        .mini-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        .mini-card {
+            background: var(--white);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+        }
+        .mini-card-img {
+            height: 90px;
+            object-fit: cover;
+            width: 100%;
+        }
+        .mini-card-body {
+            padding: 0.6rem 0.8rem;
+        }
+        .mini-card-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--green-deep);
+        }
+        .mini-card-sub {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+        .mini-card-price {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--amber);
+        }
+        /* Botón grande de ir al catálogo */
+        .btn-catalogo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--green-deep);
+            color: var(--white);
+            text-decoration: none;
+            padding: 1rem;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            transition: background 0.2s;
+        }
+        .btn-catalogo:hover { background: var(--amber); }
+
+        /* ══════════════════════════════════════════
+           RAZAS DESTACADAS
+        ══════════════════════════════════════════ */
+        .razas-section {
+            padding: 5rem 0;
+            background: var(--cream);
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .section-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--amber);
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: var(--green-deep);
+            line-height: 1.15;
+        }
+        .section-sub {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+        }
+        .razas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+        .raza-card {
+            background: var(--white);
+            border-radius: 22px;
+            padding: 2rem 1.8rem;
+            text-align: center;
+            box-shadow: var(--shadow-card);
+            transition: transform 0.25s, box-shadow 0.25s;
+            cursor: default;
+        }
+        .raza-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+        .raza-icon {
+            width: 56px; height: 56px;
+            background: linear-gradient(135deg, var(--green-deep), var(--green-mid));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.2rem;
+        }
+        .raza-icon i { font-size: 1.4rem; color: var(--white); }
+        .raza-card h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--green-deep);
+            margin-bottom: 0.5rem;
+        }
+        .raza-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .raza-card .raza-peso {
+            display: inline-block;
+            margin-top: 1rem;
+            background: var(--cream);
+            border: 1px solid var(--cream-dark);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: var(--green-mid);
+        }
+
+        /* ══════════════════════════════════════════
+           SERVICIOS
+        ══════════════════════════════════════════ */
+        .servicios-section {
+            padding: 5rem 0;
+            background: var(--white);
+        }
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        .servicio-card {
+            background: var(--cream);
+            border-radius: 22px;
+            padding: 2rem;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .servicio-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+        .servicio-ico {
+            width: 48px; height: 48px;
+            background: var(--green-mid);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+        }
+        .servicio-ico i { font-size: 1.2rem; color: var(--white); }
+        .servicio-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--green-deep);
+            margin-bottom: 0.5rem;
+        }
+        .servicio-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* ══════════════════════════════════════════
+           CONTACTO CTA
+        ══════════════════════════════════════════ */
+        .contacto-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--green-deep) 0%, #2a5c3f 60%, #1f4a32 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .contacto-section::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -100px;
+            width: 500px; height: 500px;
+            border-radius: 50%;
+            background: rgba(82,183,136,0.07);
+        }
+        .contacto-inner {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .contacto-inner h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+        .contacto-inner h2 em {
+            font-style: italic;
+            color: var(--amber-light);
+        }
+        .contacto-inner p {
+            font-size: 1.05rem;
+            color: rgba(249,245,236,0.72);
+            max-width: 520px;
+            margin: 0 auto 2.2rem;
+            line-height: 1.7;
+        }
+        .btn-amber {
+            background: var(--amber);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 8px 24px rgba(200,121,65,0.4);
+        }
+        .btn-amber:hover {
+            background: #b06535;
+            transform: translateY(-3px);
+        }
+
+        /* ══════════════════════════════════════════
+           FOOTER
+        ══════════════════════════════════════════ */
+        footer {
+            background: #111810;
+            color: rgba(255,255,255,0.55);
+            padding: 3rem 0 1.5rem;
+        }
+        .footer-grid {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .footer-brand h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+        .footer-brand h4 em { font-style: normal; color: var(--amber); }
+        .footer-brand p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            max-width: 240px;
+        }
+        .footer-contact h5 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+        .footer-contact p i { color: var(--green-light); font-size: 0.8rem; }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding-top: 1.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        /* ══════════════════════════════════════════
+           RESPONSIVE
+        ══════════════════════════════════════════ */
+        @media (max-width: 960px) {
+            .catalogo-cta-inner { grid-template-columns: 1fr; }
+            .catalogo-preview { max-width: 480px; margin: 0 auto; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: block; }
+            .container { padding: 0 1.2rem; }
+            .hero h1 { font-size: 2.4rem; }
+            .hero-stats { gap: 2rem; }
+            .section-title { font-size: 1.9rem; }
+            .contacto-inner h2 { font-size: 2rem; }
+        }
+        /* Menú móvil desplegable */
+        .nav-links.open {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 68px; left: 0; right: 0;
+            background: rgba(249,245,236,0.98);
+            backdrop-filter: blur(14px);
+            padding: 1.5rem 2rem;
+            gap: 1.2rem;
+            border-bottom: 1px solid var(--cream-dark);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     NAVBAR
+════════════════════════════════════ -->
+<nav class="navbar">
+    <div class="nav-inner">
+        <a href="#inicio" class="logo">
+            <img class="logo-img" src="logo.png" alt="Logo GANAVENT"
+                 onerror="this.onerror=null; this.src='https://placehold.co/80x80/1a3a2a/ffffff?text=G';">
+            <span class="logo-text">GANA<em>VENT</em></span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#catalogo">Catálogo</a></li>
+            <li><a href="#razas">Razas</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="catalogo.html" class="nav-cta"><i class="fas fa-th-large"></i> Ver ejemplares</a></li>
+        </ul>
+
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menú">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</nav>
+
+<!-- ════════════════════════════════════
+     HERO
+════════════════════════════════════ -->
+<section class="hero" id="inicio">
+    <div class="hero-inner container">
+        <div class="hero-chip">
+            <i class="fas fa-certificate"></i>
+            Genética certificada · Bolivia & Región
+        </div>
+        <h1>Venta estratégica de<br><em>ganado puro</em></h1>
+        <p class="hero-desc">
+            Más de 1.200 cabezas disponibles. Clasificadas por raza, peso y edad.
+            Cada exemplar con ficha técnica, foto y precio por kilo.
+        </p>
+        <div class="hero-actions">
+            <a href="catalogo.html" class="btn-primary">
+                <i class="fas fa-th-large"></i> Ver catálogo completo
+            </a>
+            <a href="#contacto" class="btn-outline">
+                <i class="fas fa-phone"></i> Solicitar asesoría
+            </a>
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="stat-n">1.200+</span>
+                <span class="stat-l">Cabezas disponibles</span>
+            </div>
+            <div class="hero-stat">
+                <span class="stat-n">4</span>
+                <span class="stat-l">Razas certificadas</span>
+            </div>
+            <div class="hero-stat">
+                <span class="stat-n">25+</span>
+                <span class="stat-l">Años de experiencia</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     ACCESO AL CATÁLOGO
+════════════════════════════════════ -->
+<section class="catalogo-cta" id="catalogo">
+    <div class="container">
+        <div class="catalogo-cta-inner">
+            <!-- Texto izquierda -->
+            <div class="catalogo-text">
+                <div class="eyebrow"><i class="fas fa-book-open"></i> &nbsp;Catálogo digital</div>
+                <h2>Explorá cada <em>ejemplar</em> con su ficha completa</h2>
+                <p>
+                    Nuestra plataforma de catálogo te permite ver la foto, raza, peso, edad
+                    y precio de cada animal. Filtrá por raza o categoría y consultá directamente
+                    desde la ficha individual.
+                </p>
+                <ul class="catalogo-features">
+                    <li><i class="fas fa-check"></i> Filtros por raza: Angus, Brangus, Hereford, Brahman</li>
+                    <li><i class="fas fa-check"></i> Vista en tarjetas o tabla — elegís vos</li>
+                    <li><i class="fas fa-check"></i> Perfil individual con ficha técnica completa</li>
+                    <li><i class="fas fa-check"></i> Precio total automático (kg × precio/kg)</li>
+                    <li><i class="fas fa-check"></i> Botón de cotización por ejemplar</li>
+                    <li><i class="fas fa-check"></i> Buscador en tiempo real</li>
+                </ul>
+                <a href="catalogo.html" class="btn-primary" style="width:fit-content;">
+                    Ir al catálogo de ejemplares <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Preview derecha (decorativa) -->
+            <div class="catalogo-preview">
+                <div class="preview-header">
+                    <div class="preview-dot" style="background:#ff5f57;"></div>
+                    <div class="preview-dot" style="background:#ffbd2e;"></div>
+                    <div class="preview-dot" style="background:#28ca41;"></div>
+                    <span>catalogo.html — GANAVENT</span>
+                </div>
+                <div class="preview-body">
+                    <div class="mini-cards">
+                        <div class="mini-card">
+                            <img class="mini-card-img"
+                                 src="https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?w=300&auto=format"
+                                 alt="Angus Toro"
+                                 onerror="this.src='https://placehold.co/300x90?text=🐄'">
+                            <div class="mini-card-body">
+                                <div class="mini-card-title">Toro Joven · Angus</div>
+                                <div class="mini-card-sub">560 kg · 24 meses</div>
+                                <div class="mini-card-price">$3.85/kg</div>
+                            </div>
+                        </div>
+                        <div class="mini-card">
+                            <img class="mini-card-img"
+                                 src="https://images.unsplash.com/photo-1595433707802-5c0b489e1df4?w=300&auto=format"
+                                 alt="Hereford Toro"
+                                 onerror="this.src='https://placehold.co/300x90?text=🐄'">
+                            <div class="mini-card-body">
+                                <div class="mini-card-title">Toro · Hereford</div>
+                                <div class="mini-card-sub">650 kg · 30 meses</div>
+                                <div class="mini-card-price">$3.65/kg</div>
+                            </div>
+                        </div>
+                        <div class="mini-card">
+                            <img class="mini-card-img"
+                                 src="https://images.unsplash.com/photo-1585468274952-66591eb14165?w=300&auto=format"
+                                 alt="Brangus Toro"
+                                 onerror="this.src='https://placehold.co/300x90?text=🐄'">
+                            <div class="mini-card-body">
+                                <div class="mini-card-title">Toro · Brangus</div>
+                                <div class="mini-card-sub">710 kg · 36 meses</div>
+                                <div class="mini-card-price">$3.50/kg</div>
+                            </div>
+                        </div>
+                        <div class="mini-card">
+                            <img class="mini-card-img"
+                                 src="https://images.unsplash.com/photo-1602174198173-390f9b7b4f8a?w=300&auto=format"
+                                 alt="Brahman Toro"
+                                 onerror="this.src='https://placehold.co/300x90?text=🐄'">
+                            <div class="mini-card-body">
+                                <div class="mini-card-title">Toro · Brahman</div>
+                                <div class="mini-card-sub">780 kg · 40 meses</div>
+                                <div class="mini-card-price">$3.20/kg</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="catalogo.html" class="btn-catalogo">
+                        <i class="fas fa-arrow-right"></i> Abrir catálogo completo — 14 ejemplares
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     RAZAS DESTACADAS
+════════════════════════════════════ -->
+<section class="razas-section" id="razas">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-eyebrow"><i class="fas fa-dna"></i> &nbsp;Genética bovina</span>
+            <h2 class="section-title">Principales razas en nuestro rodeo</h2>
+            <p class="section-sub">Genética certificada, adaptación al clima y rendimiento superior en cada categoría.</p>
+        </div>
+        <div class="razas-grid">
+            <div class="raza-card">
+                <div class="raza-icon"><i class="fas fa-paw"></i></div>
+                <h4>Angus</h4>
+                <p>Excelente marmoleado y fertilidad comprobada. Alta demanda en mercados premium y exportación.</p>
+                <span class="raza-peso">500 – 650 kg promedio</span>
+            </div>
+            <div class="raza-card">
+                <div class="raza-icon"><i class="fas fa-sun"></i></div>
+                <h4>Brangus</h4>
+                <p>Resistencia al calor y rusticidad extrema. Adaptación perfecta a climas tropicales y subtropicales.</p>
+                <span class="raza-peso">550 – 710 kg promedio</span>
+            </div>
+            <div class="raza-card">
+                <div class="raza-icon"><i class="fas fa-mountain"></i></div>
+                <h4>Hereford</h4>
+                <p>Precocidad destacada y partos fáciles. Muy buen rendimiento a la rastra y alta mansedumbre.</p>
+                <span class="raza-peso">470 – 650 kg promedio</span>
+            </div>
+            <div class="raza-card">
+                <div class="raza-icon"><i class="fas fa-leaf"></i></div>
+                <h4>Brahman</h4>
+                <p>Longevidad productiva y resistencia a parásitos. Base genética ideal para cruzamiento industrial.</p>
+                <span class="raza-peso">560 – 780 kg promedio</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     SERVICIOS
+════════════════════════════════════ -->
+<section class="servicios-section" id="servicios">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-eyebrow"><i class="fas fa-tools"></i> &nbsp;Lo que ofrecemos</span>
+            <h2 class="section-title">Servicios de clasificación y asesoría</h2>
+            <p class="section-sub">Soluciones integrales para productores, feedlots y criadores de todo el país.</p>
+        </div>
+        <div class="servicios-grid">
+            <div class="servicio-card">
+                <div class="servicio-ico"><i class="fas fa-weight-hanging"></i></div>
+                <h3>Clasificación por peso</h3>
+                <p>Balanzas electrónicas certificadas. Lotes homogéneos con variación máxima de ±30 kg por animal.</p>
+            </div>
+            <div class="servicio-card">
+                <div class="servicio-ico"><i class="fas fa-dna"></i></div>
+                <h3>Análisis de filiación</h3>
+                <p>Certificado de pureza racial y trazabilidad individual desde nacimiento hasta venta.</p>
+            </div>
+            <div class="servicio-card">
+                <div class="servicio-ico"><i class="fas fa-truck"></i></div>
+                <h3>Venta por lote</h3>
+                <p>Terneros, vaquillonas y toros reproductores. Logística de traslado coordinada con el comprador.</p>
+            </div>
+            <div class="servicio-card">
+                <div class="servicio-ico"><i class="fas fa-syringe"></i></div>
+                <h3>Plan sanitario</h3>
+                <p>Todos los ejemplares salen con vacunación, desparasitación y certificado sanitario vigente.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     CONTACTO / CTA FINAL
+════════════════════════════════════ -->
+<section class="contacto-section" id="contacto">
+    <div class="container">
+        <div class="contacto-inner">
+            <h2>¿Necesitás un lote<br><em>específico?</em></h2>
+            <p>
+                Asesoramos a productores, feedlots y criadores. Enviamos planilla con stock actualizado,
+                fotos reales y precio por raza y peso.
+            </p>
+            <button class="btn-amber" id="contactBtn">
+                <i class="fas fa-paper-plane"></i> Solicitar cotización
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- ════════════════════════════════════
+     FOOTER
+════════════════════════════════════ -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h4>GANA<em>VENT</em></h4>
+                <p>Venta y clasificación genética de ganado bovino desde 1998.</p>
+            </div>
+            <div class="footer-contact">
+                <h5>Contacto comercial</h5>
+                <p><i class="fas fa-map-marker-alt"></i> Santa Cruz de la Sierra, Bolivia</p>
+                <p><i class="fas fa-envelope"></i> ventas@ganavent.com</p>
+                <p><i class="fas fa-phone"></i> +591 9 XXX XXXX</p>
+            </div>
+            <div class="footer-contact">
+                <h5>Navegación</h5>
+                <p><a href="#inicio" style="color:inherit; text-decoration:none;">Inicio</a></p>
+                <p><a href="catalogo.html" style="color:inherit; text-decoration:none;">Catálogo de ejemplares</a></p>
+                <p><a href="#razas" style="color:inherit; text-decoration:none;">Razas</a></p>
+                <p><a href="#servicios" style="color:inherit; text-decoration:none;">Servicios</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2025 GANAVENT · Ganadería de precisión
+        </div>
+    </div>
+</footer>
+
+<script>
+    // ── Hamburguesa ──
+    const hamburger = document.getElementById('hamburgerBtn');
+    const navLinks  = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+        const icon = hamburger.querySelector('i');
+        icon.className = navLinks.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+    });
+    // Cerrar menú al hacer click en link
+    navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+            hamburger.querySelector('i').className = 'fas fa-bars';
+        });
+    });
+    // Cerrar en resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) {
+            navLinks.classList.remove('open');
+            hamburger.querySelector('i').className = 'fas fa-bars';
+        }
+    });
+
+    // ── Botón contacto ──
+    document.getElementById('contactBtn').addEventListener('click', () => {
+        alert('📩 Solicitud recibida.\n\nEn breve el departamento comercial te enviará el catálogo completo con lotes por peso, raza e imágenes reales disponibles.');
+    });
+</script>
+</body>
+</html>
